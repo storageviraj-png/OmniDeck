@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreeFlow — Controller</title>
+<link rel="stylesheet" href="css/tailwind.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/stage.css">
+<style>
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.25); border-radius: 99px; }
+  .tab-btn.active { background: #10b981; color: white; }
+  .checkered { background-color:#0b0f19; background-image: linear-gradient(45deg,#131a2b 25%,transparent 25%),linear-gradient(-45deg,#131a2b 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#131a2b 75%),linear-gradient(-45deg,transparent 75%,#131a2b 75%); background-size:12px 12px; background-position:0 0,0 6px,6px -6px,-6px 0; }
+  input[type="range"] { appearance:none; height:4px; background:rgba(16,185,129,0.15); border-radius:99px; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; background:#10b981; border-radius:50%; cursor:pointer; }
+  .playlist-item.live { border-color:#e11d48 !important; background:#fff1f2; }
+  .playlist-item.selected { outline:2px solid #10b981; }
+  @keyframes toastIn { from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .toast { animation: toastIn .2s ease-out; }
+</style>
+</head>
+<body class="bg-[#FAF9F6] text-slate-800 font-['Inter'] h-screen w-screen overflow-hidden flex flex-col select-none">
+
+  <div id="configErrorScreen" class="hidden fixed inset-0 bg-slate-950 z-[100] flex items-center justify-center p-6">
+    <div class="max-w-lg w-full bg-white rounded-3xl shadow-2xl p-8 border border-rose-200 space-y-4">
+      <h1 class="text-xl font-bold text-rose-600">Firebase not configured</h1>
+      <p class="text-sm text-slate-600 leading-relaxed">Open <code class="bg-slate-100 px-1 py-0.5 rounded text-rose-600 font-mono">js/config.js</code> and fill in your real Firebase project values. That one file is shared with <code class="bg-slate-100 px-1 py-0.5 rounded text-rose-600 font-mono">output.html</code>.</p>
+    </div>
+  </div>
+
+  <div id="connStrip" class="w-full px-4 py-1.5 text-[10px] font-bold flex items-center justify-between bg-amber-50 text-amber-700 border-b border-amber-200 shrink-0">
+    <span id="connStripText">Connecting to Firestore…</span>
+    <span class="flex items-center gap-3">
+      <span id="connStripVersion"></span>
+      <button onclick="navigator.clipboard.writeText(location.href.replace('controller.html','output.html'));toast('output.html URL copied','success')" class="underline">Copy output.html URL</button>
+    </span>
+  </div>
+
+  <div class="flex-1 w-full flex min-h-0">
+
+    <!-- LEFT: Library -->
+    <aside class="w-80 bg-white border-r border-slate-200 flex flex-col shrink-0 h-full">
+      <div class="flex border-b border-slate-200 text-xs font-bold">
+        <button class="tab-btn active flex-1 py-2" data-tab="bible">Bible</button>
+        <button class="tab-btn flex-1 py-2" data-tab="songs">Songs</button>
+        <button class="tab-btn flex-1 py-2" data-tab="slides">Text</button>
+        <button class="tab-btn flex-1 py-2" data-tab="images">Images</button>
+        <button class="tab-btn flex-1 py-2" data-tab="videos">Video</button>
+        <button class="tab-btn flex-1 py-2" data-tab="ann">Msgs</button>
+      </div>
+
+      <!-- Bible tab -->
+      <div class="tab-panel flex-1 overflow-y-auto p-3 space-y-2" data-panel="bible">
+        <div class="flex gap-2">
+          <select id="bibleTranslation" class="flex-1 border rounded-lg px-2 py-1.5 text-xs"></select>
+        </div>
+        <input id="bibleSearchInput" placeholder="e.g. John 3:16-18" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <div class="grid grid-cols-2 gap-2">
+          <select id="bibleBookSelect" class="border rounded-lg px-2 py-1.5 text-xs"></select>
+          <select id="bibleChapterSelect" class="border rounded-lg px-2 py-1.5 text-xs"></select>
+        </div>
+        <button id="btnBibleGo" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">Show Chapter</button>
+        <div id="bibleResults" class="space-y-1.5 pt-2"></div>
+      </div>
+
+      <!-- Songs tab -->
+      <div class="tab-panel hidden flex-1 overflow-y-auto p-3 space-y-2" data-panel="songs">
+        <button id="btnNewSong" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">+ New Song</button>
+        <div id="songList" class="space-y-1.5 pt-1"></div>
+      </div>
+
+      <!-- Text slides tab -->
+      <div class="tab-panel hidden flex-1 overflow-y-auto p-3 space-y-2" data-panel="slides">
+        <input id="textSlideLabel" placeholder="Slide label" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <textarea id="textSlideContent" placeholder="Slide content" rows="4" class="w-full border rounded-lg px-2 py-1.5 text-xs"></textarea>
+        <button id="btnAddTextSlide" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">Add to Playlist</button>
+        <div id="textSlideList" class="space-y-1.5 pt-2"></div>
+      </div>
+
+      <!-- Images tab -->
+      <div class="tab-panel hidden flex-1 overflow-y-auto p-3 space-y-2" data-panel="images">
+        <input id="imageLabel" placeholder="Image label" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <input id="imageUrl" placeholder="Image URL" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <div class="text-[10px] text-slate-400">or upload to Firebase Storage:</div>
+        <input id="imageFile" type="file" accept="image/*" class="w-full text-[10px]" />
+        <button id="btnAddImageSlide" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">Add to Playlist</button>
+        <div id="imageList" class="space-y-1.5 pt-2"></div>
+      </div>
+
+      <!-- Video tab -->
+      <div class="tab-panel hidden flex-1 overflow-y-auto p-3 space-y-2" data-panel="videos">
+        <input id="videoLabel" placeholder="Video label" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <input id="videoUrl" placeholder="Video URL" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <div class="text-[10px] text-slate-400">or upload to Firebase Storage:</div>
+        <input id="videoFile" type="file" accept="video/*" class="w-full text-[10px]" />
+        <button id="btnAddVideoSlide" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">Add to Playlist</button>
+        <div id="videoList" class="space-y-1.5 pt-2"></div>
+      </div>
+
+      <!-- Announcements / lower thirds tab -->
+      <div class="tab-panel hidden flex-1 overflow-y-auto p-3 space-y-3" data-panel="ann">
+        <div class="text-[10px] font-bold uppercase text-slate-400">Announcement Slide</div>
+        <input id="annTitle" placeholder="Title" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <textarea id="annBody" placeholder="Body" rows="3" class="w-full border rounded-lg px-2 py-1.5 text-xs"></textarea>
+        <button id="btnAddAnn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-1.5 text-xs font-bold">Add Announcement</button>
+        <div class="text-[10px] font-bold uppercase text-slate-400 pt-2">Lower Third / Message Bug</div>
+        <input id="ltTitle" placeholder="Title (e.g. Welcome)" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <input id="ltSubtitle" placeholder="Subtitle" class="w-full border rounded-lg px-2 py-1.5 text-xs" />
+        <button id="btnAddLowerThird" class="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-1.5 text-xs font-bold">Add Lower Third</button>
+      </div>
+    </aside>
+
+    <!-- CENTER -->
+    <main class="flex-1 flex flex-col h-full min-w-0">
+      <header class="p-3 border-b border-slate-200 bg-white flex items-center justify-between gap-3 shrink-0">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <button id="btnOpenLibrary" title="Open, create, or manage saved presentations" class="border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">📚 Library</button>
+          <button id="btnStartOutput" title="Choose how this presentation is delivered: a fullscreen window on this computer, or a URL for OBS/another device" class="border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">▶ Start Output</button>
+          <button id="btnOpenConnections" title="Get shareable links for a second controller or OBS's Browser Source" class="hidden border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0">🔗 Connections</button>
+          <span id="currentPresentationName" class="text-xs font-semibold text-slate-500 truncate px-1">Untitled Presentation</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button id="btnPrev" class="bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-semibold">◀ Prev</button>
+          <button id="btnNext" class="bg-gradient-to-r from-rose-600 to-rose-500 text-white px-4 py-1.5 rounded-xl text-xs font-bold">Next ▶</button>
+          <button id="btnBlackout" class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold ml-2">Blackout</button>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <select id="transitionSelect" class="border rounded-lg px-2 py-1.5 text-xs">
+            <option value="fade">Fade</option>
+            <option value="crossfade">Crossfade</option>
+            <option value="slide">Slide</option>
+            <option value="zoom">Zoom</option>
+            <option value="cut">Cut</option>
+          </select>
+          <button id="btnResetFormatting" title="Reset this slide's position/size/font/colors back to defaults, and stop new slides of this type from inheriting your customizations" class="border border-slate-200 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold">Reset Formatting</button>
+          <button id="btnDeleteSlide" class="border border-rose-200 text-rose-600 px-3 py-1.5 rounded-xl text-xs font-bold">Delete Slide</button>
+        </div>
+      </header>
+
+      <div class="flex-1 flex min-h-0">
+        <!-- Playlist -->
+        <div class="w-64 border-r border-slate-200 bg-white flex flex-col shrink-0">
+          <div class="p-2 text-[10px] font-bold uppercase text-slate-400 border-b">Service Playlist</div>
+          <div id="playlistEl" class="flex-1 overflow-y-auto p-2 space-y-1.5"></div>
+        </div>
+
+        <!-- Preview canvas -->
+        <div class="flex-1 flex flex-col p-4 min-w-0">
+          <div class="text-[10px] font-bold uppercase text-slate-400 mb-2">Editable Preview (drag boxes to reposition/resize)</div>
+          <div class="flex-1 rounded-xl border border-slate-200 checkered relative overflow-hidden shadow-inner" style="aspect-ratio:16/9;">
+            <div id="previewStage" class="ff-stage absolute inset-0"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT: Inspector -->
+    <aside class="w-80 bg-white border-l border-slate-200 flex flex-col shrink-0 h-full overflow-y-auto p-3 space-y-4" id="inspector">
+      <div>
+        <div class="text-[10px] font-bold uppercase text-slate-400 mb-1.5">Slide Background</div>
+        <select id="bgMode" class="w-full border rounded-lg px-2 py-1.5 text-xs mb-1.5">
+          <option value="transparent">Transparent</option>
+          <option value="color">Solid Color</option>
+          <option value="gradient">Gradient</option>
+          <option value="image">Image</option>
+        </select>
+        <div id="bgColorRow" class="flex items-center gap-2 mb-1.5"><label class="text-xs w-20">Color</label><input id="bgColor" type="color" class="flex-1 h-8" /></div>
+        <div id="bgGradientRow" class="hidden space-y-1.5 mb-1.5">
+          <div class="flex items-center gap-2"><label class="text-xs w-20">From</label><input id="bgGradFrom" type="color" class="flex-1 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">To</label><input id="bgGradTo" type="color" class="flex-1 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Angle</label><input id="bgGradAngle" type="range" min="0" max="360" class="flex-1" /></div>
+        </div>
+        <div id="bgImageRow" class="hidden mb-1.5"><input id="bgImageUrl" placeholder="Background image URL" class="w-full border rounded-lg px-2 py-1.5 text-xs" /></div>
+      </div>
+
+      <div id="elementInspector" class="hidden space-y-2 border-t pt-3">
+        <div class="text-[10px] font-bold uppercase text-slate-400">Selected Element</div>
+
+        <!-- Text-only fields -->
+        <div id="fieldsText" class="hidden space-y-2">
+          <textarea id="elContent" rows="2" class="w-full border rounded-lg px-2 py-1.5 text-xs"></textarea>
+          <div class="grid grid-cols-2 gap-2">
+            <select id="elFont" class="border rounded-lg px-2 py-1.5 text-xs">
+              <option>Inter</option><option>Montserrat</option><option>Playfair Display</option>
+              <option>Poppins</option><option>Cinzel</option><option>Bebas Neue</option>
+            </select>
+            <select id="elWeight" class="border rounded-lg px-2 py-1.5 text-xs">
+              <option value="400">Regular</option><option value="600">Semibold</option>
+              <option value="700">Bold</option><option value="800">Black</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Size</label><input id="elFontSize" type="range" min="1" max="10" step="0.1" class="flex-1" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Letter sp.</label><input id="elLetterSpacing" type="range" min="-2" max="10" step="0.5" class="flex-1" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Color</label><input id="elColor" type="color" class="flex-1 h-8" /></div>
+          <div class="flex gap-1.5">
+            <button class="align-btn flex-1 border rounded-lg py-1 text-xs" data-align="left">L</button>
+            <button class="align-btn flex-1 border rounded-lg py-1 text-xs" data-align="center">C</button>
+            <button class="align-btn flex-1 border rounded-lg py-1 text-xs" data-align="right">R</button>
+          </div>
+          <div class="flex gap-1.5">
+            <button class="valign-btn flex-1 border rounded-lg py-1 text-xs" data-valign="top">Top</button>
+            <button class="valign-btn flex-1 border rounded-lg py-1 text-xs" data-valign="center">Mid</button>
+            <button class="valign-btn flex-1 border rounded-lg py-1 text-xs" data-valign="bottom">Bot</button>
+          </div>
+          <div class="text-[10px] font-bold uppercase text-slate-400 pt-2">Glow / Outline / Shadow</div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Glow</label><input id="elGlow" type="range" min="0" max="30" class="flex-1" /><input id="elGlowColor" type="color" class="w-8 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Outline</label><input id="elOutline" type="range" min="0" max="6" step="0.5" class="flex-1" /><input id="elOutlineColor" type="color" class="w-8 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Shadow</label><input id="elShadow" type="range" min="0" max="20" class="flex-1" /><input id="elShadowColor" type="color" class="w-8 h-8" /></div>
+        </div>
+
+        <!-- Image + video share a "fit" control -->
+        <div id="fieldsMedia" class="hidden">
+          <select id="elImageFit" class="w-full border rounded-lg px-2 py-1.5 text-xs">
+            <option value="contain">Fit: Contain</option>
+            <option value="cover">Fit: Cover</option>
+            <option value="fill">Fit: Fill (stretch)</option>
+          </select>
+        </div>
+
+        <!-- Video-only fields -->
+        <div id="fieldsVideo" class="hidden space-y-1.5">
+          <label class="flex items-center gap-2 text-xs"><input id="elAutoplay" type="checkbox" /> Autoplay</label>
+          <label class="flex items-center gap-2 text-xs"><input id="elLoop" type="checkbox" /> Loop</label>
+          <label class="flex items-center gap-2 text-xs"><input id="elMuted" type="checkbox" /> Muted</label>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Volume</label><input id="elVolume" type="range" min="0" max="1" step="0.05" class="flex-1" /></div>
+        </div>
+
+        <!-- Shape-only fields -->
+        <div id="fieldsShape" class="hidden space-y-1.5">
+          <select id="elShapeType" class="w-full border rounded-lg px-2 py-1.5 text-xs">
+            <option value="rectangle">Rectangle</option>
+            <option value="ellipse">Ellipse</option>
+          </select>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Fill</label><input id="elFill" type="color" class="flex-1 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Stroke</label><input id="elStroke" type="color" class="flex-1 h-8" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Stroke width</label><input id="elStrokeWidth" type="range" min="0" max="20" class="flex-1" /></div>
+          <div class="flex items-center gap-2"><label class="text-xs w-20">Corner rad.</label><input id="elCornerRadius" type="range" min="0" max="50" class="flex-1" /></div>
+        </div>
+
+        <!-- Shared by every kind -->
+        <div class="flex items-center gap-2 pt-1"><label class="text-xs w-20">Opacity</label><input id="elOpacity" type="range" min="0" max="1" step="0.05" class="flex-1" /></div>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <div class="flex items-center gap-1"><label class="text-[10px] w-6">X%</label><input id="elX" type="number" class="w-full border rounded px-1 py-1 text-xs" /></div>
+          <div class="flex items-center gap-1"><label class="text-[10px] w-6">Y%</label><input id="elY" type="number" class="w-full border rounded px-1 py-1 text-xs" /></div>
+          <div class="flex items-center gap-1"><label class="text-[10px] w-6">W%</label><input id="elW" type="number" class="w-full border rounded px-1 py-1 text-xs" /></div>
+          <div class="flex items-center gap-1"><label class="text-[10px] w-6">H%</label><input id="elH" type="number" class="w-full border rounded px-1 py-1 text-xs" /></div>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5 pt-2">
+          <button id="btnAddTextBox" class="border border-emerald-200 text-emerald-700 rounded-lg py-1.5 text-xs font-bold">+ Text Box</button>
+          <button id="btnAddShape" class="border border-emerald-200 text-emerald-700 rounded-lg py-1.5 text-xs font-bold">+ Shape</button>
+        </div>
+        <button id="btnDeleteElement" class="w-full border border-rose-200 text-rose-600 rounded-lg py-1.5 text-xs font-bold">Delete This Element</button>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toastHost" class="fixed bottom-4 right-4 z-[200] space-y-2"></div>
+
+  <!-- Add/edit song modal -->
+  <div id="songModal" class="hidden fixed inset-0 bg-black/40 z-[150] items-center justify-center p-6">
+    <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-lg space-y-3">
+      <h2 class="font-bold text-lg">Song</h2>
+      <input id="songTitleInput" placeholder="Title" class="w-full border rounded-lg px-2 py-1.5 text-sm" />
+      <input id="songArtistInput" placeholder="Artist (optional)" class="w-full border rounded-lg px-2 py-1.5 text-sm" />
+      <textarea id="songLyricsInput" placeholder="Lyrics — one line per slide" rows="10" class="w-full border rounded-lg px-2 py-1.5 text-sm font-mono"></textarea>
+      <div class="flex justify-end gap-2">
+        <button id="btnCancelSong" class="px-3 py-1.5 text-sm rounded-lg border">Cancel</button>
+        <button id="btnSaveSong" class="px-3 py-1.5 text-sm rounded-lg bg-emerald-600 text-white font-bold">Save Song</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Output Mode modal — "Start Output" entry point. Both choices lead to
+       the SAME output.html and the SAME renderer; this only changes how
+       the operator gets there (native fullscreen window vs. a URL to
+       paste elsewhere). See js/controller.js. -->
+  <div id="outputModeModal" class="hidden fixed inset-0 bg-black/40 z-[150] items-center justify-center p-6">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-lg">Start Output</h2>
+        <button id="btnCloseOutputMode" class="border rounded-lg px-3 py-1.5 text-xs font-bold">✕</button>
+      </div>
+
+      <div id="outputModeChoice" class="grid grid-cols-2 gap-3">
+        <button id="btnModeDisplay" class="border-2 border-slate-200 hover:border-emerald-500 rounded-xl p-4 text-left space-y-1">
+          <div class="text-2xl">🖥️</div>
+          <div class="text-sm font-bold">Display Output</div>
+          <div class="text-[10px] text-slate-500">Fullscreen window on this computer — for a projector or a second monitor.</div>
+        </button>
+        <button id="btnModeWeb" class="border-2 border-slate-200 hover:border-emerald-500 rounded-xl p-4 text-left space-y-1">
+          <div class="text-2xl">🌐</div>
+          <div class="text-sm font-bold">Web Output</div>
+          <div class="text-[10px] text-slate-500">A URL to paste into OBS, another computer, a tablet, or a TV browser.</div>
+        </button>
+      </div>
+
+      <div id="outputModeWebPanel" class="hidden space-y-1">
+        <button id="btnBackToOutputModeChoice" class="text-[10px] text-slate-400 underline mb-1">← back</button>
+        <div class="text-xs font-bold text-slate-500 mb-1">Output URL</div>
+        <div class="flex gap-1.5">
+          <input id="outputModeUrl" readonly class="flex-1 border rounded-lg px-2 py-1.5 text-xs bg-slate-50" />
+          <button id="btnCopyOutputModeUrl" class="border rounded-lg px-3 py-1.5 text-xs font-bold shrink-0">Copy</button>
+        </div>
+        <div class="text-[10px] text-slate-400 mt-1">Read-only — can't be used to control the presentation. Paste this into OBS's Browser Source, or open it on another device.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connections modal (local mode only) -->
+  <div id="connectionsModal" class="hidden fixed inset-0 bg-black/40 z-[150] items-center justify-center p-6">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-lg">Connections</h2>
+        <button id="btnCloseConnections" class="border rounded-lg px-3 py-1.5 text-xs font-bold">✕</button>
+      </div>
+      <div>
+        <div class="text-xs font-bold text-slate-500 mb-1">Output URL — paste into OBS's Browser Source</div>
+        <div class="flex gap-1.5">
+          <input id="connOutputUrl" readonly class="flex-1 border rounded-lg px-2 py-1.5 text-xs bg-slate-50" />
+          <button id="btnCopyOutputUrl" class="border rounded-lg px-3 py-1.5 text-xs font-bold shrink-0">Copy</button>
+        </div>
+        <div class="text-[10px] text-slate-400 mt-1">Read-only — can't be used to control the presentation.</div>
+      </div>
+      <div>
+        <div class="text-xs font-bold text-slate-500 mb-1">Controller URL — open on a second computer to control from there too</div>
+        <div class="flex gap-1.5">
+          <input id="connControllerUrl" readonly class="flex-1 border rounded-lg px-2 py-1.5 text-xs bg-slate-50" />
+          <button id="btnCopyControllerUrl" class="border rounded-lg px-3 py-1.5 text-xs font-bold shrink-0">Copy</button>
+        </div>
+        <div class="text-[10px] text-slate-400 mt-1">Full control — only share with people who should be able to run the service.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Presentation Library modal -->
+  <div id="libraryModal" class="hidden fixed inset-0 bg-black/40 z-[150] items-center justify-center p-6">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-[80vh] flex flex-col overflow-hidden">
+      <div class="p-4 border-b flex items-center gap-2 shrink-0 flex-wrap">
+        <h2 class="font-bold text-lg mr-2 shrink-0">Presentation Library</h2>
+        <input id="libSearch" placeholder="Search presentations…" class="flex-1 min-w-[140px] border rounded-lg px-3 py-1.5 text-sm" />
+        <select id="libSort" class="border rounded-lg px-2 py-1.5 text-xs">
+          <option value="recent">Recently opened</option>
+          <option value="updated">Last edited</option>
+          <option value="name">Name (A–Z)</option>
+          <option value="created">Date created</option>
+        </select>
+        <button id="libFavToggle" title="Show favorites only" class="border rounded-lg px-3 py-1.5 text-xs font-bold">⭐ Favorites</button>
+        <button id="btnNewPresentation" class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-xs font-bold">+ New</button>
+        <button id="btnCloseLibrary" class="border rounded-lg px-3 py-1.5 text-xs font-bold">✕</button>
+      </div>
+      <div id="libFolders" class="px-4 py-2 border-b flex items-center gap-1.5 flex-wrap text-xs shrink-0"></div>
+      <div id="libGrid" class="flex-1 overflow-y-auto p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 content-start"></div>
+      <div id="libEmpty" class="hidden flex-1 items-center justify-center text-sm text-slate-400">No presentations yet — click + New to create one.</div>
+    </div>
+  </div>
+
+  <script type="module" src="js/controller.js"></script>
+</body>
+</html>

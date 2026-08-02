@@ -1,0 +1,254 @@
+/* OmniDeck — locally self-hosted fonts, replacing the Google Fonts CDN.
+ * Sourced from the Fontsource project (fonts.google.com content redistributed
+ * under their original open licenses — OFL for all families here) and vendored
+ * into frontend/fonts/ at build time, so the app never makes a font request over
+ * the network. Only the weights/styles actually used by the app are included —
+ * see frontend/js/controller.js's #elFont options and config.js's
+ * SCRIPT_FONT_FALLBACK for what's in use. To add a font/weight later: install
+ * the matching @fontsource/<family> package, copy the relevant latin-<weight>.css
+ * (rewriting its url() paths to ../fonts/<file>.woff2 — this file lives in
+ * frontend/css/, font files live in frontend/fonts/) and its files/*.woff2
+ * into frontend/fonts/, then append the block here. */
+
+/* inter-latin-300-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(../fonts/inter-latin-300-normal.woff2) format('woff2'), url(../fonts/inter-latin-300-normal.woff) format('woff');
+}
+
+/* inter-latin-400-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/inter-latin-400-normal.woff2) format('woff2'), url(../fonts/inter-latin-400-normal.woff) format('woff');
+}
+
+/* inter-latin-500-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(../fonts/inter-latin-500-normal.woff2) format('woff2'), url(../fonts/inter-latin-500-normal.woff) format('woff');
+}
+
+/* inter-latin-600-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(../fonts/inter-latin-600-normal.woff2) format('woff2'), url(../fonts/inter-latin-600-normal.woff) format('woff');
+}
+
+/* inter-latin-700-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/inter-latin-700-normal.woff2) format('woff2'), url(../fonts/inter-latin-700-normal.woff) format('woff');
+}
+
+/* inter-latin-800-normal */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(../fonts/inter-latin-800-normal.woff2) format('woff2'), url(../fonts/inter-latin-800-normal.woff) format('woff');
+}
+
+/* montserrat-latin-400-normal */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/montserrat-latin-400-normal.woff2) format('woff2'), url(../fonts/montserrat-latin-400-normal.woff) format('woff');
+}
+
+/* montserrat-latin-700-normal */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/montserrat-latin-700-normal.woff2) format('woff2'), url(../fonts/montserrat-latin-700-normal.woff) format('woff');
+}
+
+/* montserrat-latin-900-normal */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url(../fonts/montserrat-latin-900-normal.woff2) format('woff2'), url(../fonts/montserrat-latin-900-normal.woff) format('woff');
+}
+
+/* playfair-display-latin-400-normal */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/playfair-display-latin-400-normal.woff2) format('woff2'), url(../fonts/playfair-display-latin-400-normal.woff) format('woff');
+}
+
+/* playfair-display-latin-700-normal */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/playfair-display-latin-700-normal.woff2) format('woff2'), url(../fonts/playfair-display-latin-700-normal.woff) format('woff');
+}
+
+/* playfair-display-latin-400-italic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/playfair-display-latin-400-italic.woff2) format('woff2'), url(../fonts/playfair-display-latin-400-italic.woff) format('woff');
+}
+
+/* poppins-latin-300-normal */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(../fonts/poppins-latin-300-normal.woff2) format('woff2'), url(../fonts/poppins-latin-300-normal.woff) format('woff');
+}
+
+/* poppins-latin-500-normal */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(../fonts/poppins-latin-500-normal.woff2) format('woff2'), url(../fonts/poppins-latin-500-normal.woff) format('woff');
+}
+
+/* poppins-latin-700-normal */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/poppins-latin-700-normal.woff2) format('woff2'), url(../fonts/poppins-latin-700-normal.woff) format('woff');
+}
+
+/* poppins-latin-800-normal */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(../fonts/poppins-latin-800-normal.woff2) format('woff2'), url(../fonts/poppins-latin-800-normal.woff) format('woff');
+}
+
+/* cinzel-latin-600-normal */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(../fonts/cinzel-latin-600-normal.woff2) format('woff2'), url(../fonts/cinzel-latin-600-normal.woff) format('woff');
+}
+
+/* cinzel-latin-800-normal */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url(../fonts/cinzel-latin-800-normal.woff2) format('woff2'), url(../fonts/cinzel-latin-800-normal.woff) format('woff');
+}
+
+/* bebas-neue-latin-400-normal */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/bebas-neue-latin-400-normal.woff2) format('woff2'), url(../fonts/bebas-neue-latin-400-normal.woff) format('woff');
+}
+
+/* noto-sans-telugu-telugu-400-normal */
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/noto-sans-telugu-telugu-400-normal.woff2) format('woff2'), url(../fonts/noto-sans-telugu-telugu-400-normal.woff) format('woff');
+}
+
+/* noto-sans-telugu-telugu-500-normal */
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(../fonts/noto-sans-telugu-telugu-500-normal.woff2) format('woff2'), url(../fonts/noto-sans-telugu-telugu-500-normal.woff) format('woff');
+}
+
+/* noto-sans-telugu-telugu-600-normal */
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(../fonts/noto-sans-telugu-telugu-600-normal.woff2) format('woff2'), url(../fonts/noto-sans-telugu-telugu-600-normal.woff) format('woff');
+}
+
+/* noto-sans-telugu-telugu-700-normal */
+@font-face {
+  font-family: 'Noto Sans Telugu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/noto-sans-telugu-telugu-700-normal.woff2) format('woff2'), url(../fonts/noto-sans-telugu-telugu-700-normal.woff) format('woff');
+}
+
+/* noto-sans-devanagari-devanagari-400-normal */
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../fonts/noto-sans-devanagari-devanagari-400-normal.woff2) format('woff2'), url(../fonts/noto-sans-devanagari-devanagari-400-normal.woff) format('woff');
+}
+
+/* noto-sans-devanagari-devanagari-500-normal */
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(../fonts/noto-sans-devanagari-devanagari-500-normal.woff2) format('woff2'), url(../fonts/noto-sans-devanagari-devanagari-500-normal.woff) format('woff');
+}
+
+/* noto-sans-devanagari-devanagari-600-normal */
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(../fonts/noto-sans-devanagari-devanagari-600-normal.woff2) format('woff2'), url(../fonts/noto-sans-devanagari-devanagari-600-normal.woff) format('woff');
+}
+
+/* noto-sans-devanagari-devanagari-700-normal */
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(../fonts/noto-sans-devanagari-devanagari-700-normal.woff2) format('woff2'), url(../fonts/noto-sans-devanagari-devanagari-700-normal.woff) format('woff');
+}

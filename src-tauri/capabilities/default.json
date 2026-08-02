@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Permissions for OmniDeck's main (controller) and output windows, both of which load pages from the embedded local server (http://localhost:4747) rather than the tauri:// asset protocol.",
+  "windows": ["main", "output"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-set-focus",
+    "core:window:allow-create"
+  ],
+  "remote": {
+    "urls": ["http://localhost:4747/*"]
+  }
+}

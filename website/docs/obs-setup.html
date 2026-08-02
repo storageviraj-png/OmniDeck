@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBS Setup — OmniDeck Docs</title>
+<meta name="description" content="Send OmniDeck's output into OBS using a Browser Source — no capture card needed.">
+<link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="container" style="padding-top:28px;">
+    <a href="../index.html" class="doc-page__back">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" width="14" height="14"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to OmniDeck
+    </a>
+  </div>
+
+  <main class="doc-page">
+    <div class="container">
+      <article>
+        <span class="doc-page__kicker">Documentation / OBS Setup</span>
+        <h1>OBS Setup</h1>
+        <p class="doc-page__lede">Send OmniDeck's output straight into OBS using a Browser Source — no capture card, no separate renderer to keep in sync.</p>
+
+        <h2>Steps</h2>
+        <ol>
+          <li>In OmniDeck's controller, choose <strong>Start Output → Web Output</strong>.</li>
+          <li>Copy the generated <strong>Output URL</strong>. It's a private, hard-to-guess link tied to this installation — not a public page.</li>
+          <li>In OBS, add a new <strong>Browser Source</strong>, paste the URL in, and set its resolution to match your stream canvas (<code>1920×1080</code> is a safe default).</li>
+          <li>Leave <strong>"Shutdown source when not visible"</strong> unchecked, so OmniDeck keeps rendering in the background between cues.</li>
+          <li>Resize and position the source in your scene like any other layer.</li>
+        </ol>
+
+        <h2>Why this works</h2>
+        <p>The Browser Source loads the exact same output page and renderer that drives the projector — there's no OBS-specific version to fall out of sync. Whatever is live on screen is what OBS sees.</p>
+
+        <div class="callout">Using a second computer instead of OBS? The same Output URL works there too — paste it into any browser, on a tablet, a TV, or another PC on the network.</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="container">
+    <div class="doc-footer">
+      <span><a href="getting-started.html">← Getting Started</a></span>
+      <span><a href="faq.html">FAQ →</a></span>
+    </div>
+  </div>
+</body>
+</html>

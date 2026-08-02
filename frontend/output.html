@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreeFlow — Output</title>
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="stylesheet" href="css/fonts.css">
+
+<link rel="stylesheet" href="css/stage.css">
+<style>
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: transparent; overflow: hidden; }
+  #stageWrap { position: fixed; inset: 0; }
+  #debugBadge {
+    position: fixed; bottom: 6px; left: 6px;
+    font: 11px/1.4 'Space Mono', monospace; color: #0f0;
+    background: rgba(0,0,0,0.65); padding: 6px 10px; border-radius: 6px;
+    white-space: pre; display: none; z-index: 9999;
+  }
+  #fatalBanner {
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    background: rgba(20,0,0,0.92); color: #ff6b6b; font: 600 16px/1.6 monospace;
+    text-align: center; padding: 40px; z-index: 10000; white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+  <div id="stageWrap"><div id="stage" class="ff-stage"></div></div>
+  <div id="debugBadge"></div>
+  <div id="fatalBanner"></div>
+
+  <script type="module">
+    import { watchLiveState } from './js/sync-provider.js';
+    import { paintSlide, transitionTo } from './js/render-engine.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const DEBUG = params.get('debug') === '1';
+    const debugBadge = document.getElementById('debugBadge');
+    const fatalBanner = document.getElementById('fatalBanner');
+    if (DEBUG) debugBadge.style.display = 'block';
+
+    const stageEl = document.getElementById('stage');
+
+    let lastKey = null;
+    let lastVersion = null;
+    let lastEventAt = null;
+
+    function updateBadge(state) {
+      if (!DEBUG) return;
+      debugBadge.textContent = `state: ${state}\nversion: ${lastVersion}\nlast event: ${lastEventAt ? new Date(lastEventAt).toLocaleTimeString() : '-'}`;
+    }
+
+    function showFatal(msg) { fatalBanner.textContent = msg; fatalBanner.style.display = 'flex'; }
+    function hideFatal() { fatalBanner.style.display = 'none'; }
+
+    function render(data) {
+      lastEventAt = Date.now();
+      if (!data || !Array.isArray(data.slides) || data.slides.length === 0) {
+        paintSlide(stageEl, null);
+        lastKey = null;
+        return;
+      }
+      const idx = Math.max(0, Math.min(Math.floor(Number(data.currentIndex || 0)), data.slides.length - 1));
+      const slide = data.blackout ? null : data.slides[idx];
+      const key = `${data.version}::${idx}::${data.blackout}`;
+      lastVersion = data.version ?? lastVersion;
+      if (key === lastKey) return; // identical state already on screen — skip, avoids flicker
+      lastKey = key;
+
+      const transitionKind = (slide && slide.transition) || 'fade';
+      transitionTo(stageEl, transitionKind, () => paintSlide(stageEl, slide));
+    }
+
+    try {
+      watchLiveState((data) => { hideFatal(); render(data); updateBadge('live'); }, {
+        log: (...a) => { console.log('[FreeFlowOutput]', ...a); updateBadge('reconnecting'); }
+      });
+    } catch (e) {
+      if (e.message === 'CONFIG_NOT_SET') {
+        showFatal('FreeFlow Output: Firebase config not set.\nOpen js/config.js and fill in your real Firebase project values (same file is shared with controller.html), or open this page with ?room=&token= from the OmniDeck desktop app for local mode instead.');
+      } else {
+        showFatal(`FreeFlow Output error:\n${e.message}`);
+      }
+    }
+  </script>
+</body>
+</html>

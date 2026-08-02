@@ -1,0 +1,26 @@
+{
+  "_comment": "Single source of truth for the site's version badge and Download buttons. Hand-edit this after a release, or let .github/workflows/update-website-release.yml regenerate it automatically when you publish a GitHub Release — see website/README.md.",
+  "version": "1.0.0",
+  "publishedAt": "2026-07-01",
+  "repo": "OWNER/omnideck",
+  "platforms": {
+    "windows": {
+      "status": "available",
+      "url": "https://github.com/OWNER/omnideck/releases/download/v1.0.0/OmniDeck-1.0.0-x64-setup.exe",
+      "size": "48 MB",
+      "note": "Windows 10 / 11, 64-bit"
+    },
+    "macos": {
+      "status": "coming-soon",
+      "url": null,
+      "size": null,
+      "note": "macOS 12 or later"
+    },
+    "linux": {
+      "status": "coming-soon",
+      "url": null,
+      "size": null,
+      "note": "AppImage & .deb"
+    }
+  }
+}

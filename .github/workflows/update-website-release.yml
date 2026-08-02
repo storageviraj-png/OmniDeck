@@ -1,0 +1,48 @@
+name: Update website download links
+
+# Fires when a GitHub Release is published (e.g. after the desktop app's own
+# build/release workflow uploads installers as release assets). This is the
+# ONLY thing that touches the website in response to an app release — it
+# edits one JSON file and commits it. It never touches /freeflow, and the
+# app's build workflow never has to know the website exists.
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {} # allow a manual re-run from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-releases-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Regenerate website/data/releases.json
+        env:
+          RELEASE_JSON: ${{ toJson(github.event.release) }}
+        run: node website/scripts/generate-releases-json.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "omnideck-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet -- website/data/releases.json; then
+            echo "No download-link changes for this release."
+            exit 0
+          fi
+          git add website/data/releases.json
+          git commit -m "website: update download links for ${{ github.event.release.tag_name }}"
+          git push
+
+  # If your host deploys from a webhook rather than watching every commit to
+  # main (e.g. a Netlify/Vercel "deploy hook" URL saved as a repo secret),
+  # uncomment this to explicitly trigger a redeploy after the commit above:
+  #
+  # - name: Trigger site redeploy
+  #   run: curl -X POST "${{ secrets.DEPLOY_HOOK_URL }}"

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniDeck — Professional Church Presentation Software</title>
+<meta name="description" content="OmniDeck runs scripture, lyrics, media, and announcements from one playlist — a projector-ready, offline-first presentation platform built to run an entire church service, not just display lyrics.">
+
+<meta property="og:title" content="OmniDeck — Professional Church Presentation Software">
+<meta property="og:description" content="One playlist for scripture, lyrics, media, and announcements. Offline-first, autosaving, and built to run the whole service.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0b0e">
+
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============================== Header / Nav ============================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <svg class="brand__mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="3" width="26" height="26" rx="8" stroke="currentColor" stroke-width="2"/>
+          <circle cx="16" cy="16" r="5" fill="#E11D48"/>
+        </svg>
+        OmniDeck
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#why">Why OmniDeck</a>
+        <a href="#downloads">Downloads</a>
+        <a href="#docs">Docs</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="btn btn--ghost nav__gh" href="https://github.com/OWNER/omnideck" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a>
+        <a class="btn btn--primary btn--sm" id="navDownloadBtn" href="#downloads">Download</a>
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Toggle menu">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile container" id="navMobile">
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#why">Why OmniDeck</a></li>
+        <li><a href="#downloads">Downloads</a></li>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="https://github.com/OWNER/omnideck" target="_blank" rel="noopener">GitHub ↗</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ================================== Hero ================================== -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <p class="hero__badge" id="heroBadge">
+          <span class="dot"></span>
+          <span id="heroBadgeText">Live for Windows</span>
+        </p>
+
+        <h1 class="hero__title">Professional Church<br>Presentation Software</h1>
+
+        <p class="hero__desc">
+          OmniDeck runs scripture, lyrics, media, and announcements from one playlist,
+          with a projector-ready output and autosave that never drops a beat. Built for
+          churches that need to run an entire service — reliably, every week.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" id="heroDownloadBtn" href="#downloads">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v9m0 0 3.5-3.5M8 10 4.5 6.5M2 13h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn--secondary" href="https://github.com/OWNER/omnideck" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+
+        <p class="hero__meta">Free &amp; open source · Windows available now — macOS &amp; Linux coming soon</p>
+      </div>
+
+      <!-- Signature element: an abstracted control room, built from the product's
+           own vocabulary (playlist, live tally, blackout/next) rather than a
+           generic browser-window mockup. Real screenshots live further down. -->
+      <div class="container">
+        <div class="mockup" aria-hidden="true">
+          <div class="mockup__bar">
+            <span></span><span></span><span></span>
+            <span class="label">controller — Sunday Service</span>
+          </div>
+          <div class="mockup__body">
+            <div class="mockup__list">
+              <div class="mockup__item">📖 John 3:16</div>
+              <div class="mockup__item mockup__item--live">🎵 Great Are You Lord</div>
+              <div class="mockup__item">📝 Welcome</div>
+              <div class="mockup__item">🏷️ Give Online</div>
+              <div class="mockup__item">📢 Next Week</div>
+            </div>
+            <div class="mockup__stage">
+              <span class="mockup__tally"><span class="dot"></span>LIVE</span>
+              <p class="mockup__line">Great are You, Lord<br>and worthy of glory</p>
+              <div class="mockup__toolbar"><span>◀ Prev</span><span>Next ▶</span><span>Blackout</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= Features ================================= -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Features</p>
+          <h2 class="section-title">Everything a live service needs</h2>
+          <p class="section-desc">One application, one renderer, built to run start to finish without a hiccup.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="7" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 14V6a2 2 0 0 1 2-2h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <h3>One unified renderer</h3>
+            <p>Preview, projector output, OBS, and thumbnails all render through the exact same engine — what you see is exactly what goes live.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="14" r="2.6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <h3>OBS Browser Source support</h3>
+            <p>Paste one URL into OBS and stream or record your service — no capture card, no second renderer.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 16a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A4.5 4.5 0 0 1 17 16H7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 11v6m0 0-2-2m2 2 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Local &amp; cloud sync</h3>
+            <p>Run entirely on your church's own network, or sync over the internet when volunteers are remote.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l16 16M8.5 4.6a9 9 0 0 1 10.9 10.9M5.6 8.5A9 9 0 0 0 4.8 15M12 12a3 3 0 0 1 2.8 1.9M9 15.5a4.5 4.5 0 0 1 1.2-2M12 19v.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <h3>Offline-first architecture</h3>
+            <p>Nothing about running a service depends on the internet or a server you don't control.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="5" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="11" width="16" height="5" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="18" width="10" height="2" rx="1" fill="currentColor"/></svg></div>
+            <h3>Presentation library</h3>
+            <p>Every service is saved, searchable, and ready to reopen next week — nothing is ever really gone.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <h3>Component-based slides</h3>
+            <p>Scripture, lyrics, and lower-thirds are built from the same elements, styled independently.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Autosave</h3>
+            <p>Every edit is saved as you make it. No save button, no losing your place mid-service.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="8" height="12" rx="1.4" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="6" width="8" height="12" rx="1.4" stroke="currentColor" stroke-width="1.5"/><path d="M11 12h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <h3>Controller &amp; output separation</h3>
+            <p>Run the control surface on a laptop and the output on the projector PC — independent, purpose-built screens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ Screenshots ================================ -->
+    <section class="section" id="screenshots">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Screenshots</p>
+          <h2 class="section-title">See it in action</h2>
+          <p class="section-desc">A closer look at the controller, the output, and the library your team will actually run.</p>
+        </div>
+
+        <div class="shots-grid">
+          <!-- Each figure drops in a real screenshot automatically once one exists at
+               the matching path — see the "Screenshots" note in website/README.md. -->
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/screenshots/editor.png" alt="OmniDeck editor with playlist and live preview" loading="lazy" data-shot>
+              <div class="shot__placeholder">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="12" y="4" width="9" height="16" rx="1.2" stroke="currentColor" stroke-width="1.4"/></svg>
+                <span>EDITOR — SCREENSHOT COMING SOON</span>
+              </div>
+            </div>
+            <figcaption class="shot__caption">
+              <h3>Editor</h3>
+              <p>Drag-and-drop preview with a live-synced playlist.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/screenshots/output.png" alt="OmniDeck fullscreen projector output" loading="lazy" data-shot>
+              <div class="shot__placeholder">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                <span>OUTPUT — SCREENSHOT COMING SOON</span>
+              </div>
+            </div>
+            <figcaption class="shot__caption">
+              <h3>Output</h3>
+              <p>The exact projector-ready output, also used for OBS and Web Output.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/screenshots/media.png" alt="OmniDeck media library grid" loading="lazy" data-shot>
+              <div class="shot__placeholder">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.4" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="10" r="1.6" stroke="currentColor" stroke-width="1.4"/><path d="M4 17l4.5-4.5L12 16l3-3 5 5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span>MEDIA — SCREENSHOT COMING SOON</span>
+              </div>
+            </div>
+            <figcaption class="shot__caption">
+              <h3>Media</h3>
+              <p>Images and video, organized and ready to drop into a slide.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/screenshots/library.png" alt="OmniDeck presentation library" loading="lazy" data-shot>
+              <div class="shot__placeholder">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="13" y="4" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="4" y="13" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/><rect x="13" y="13" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/></svg>
+                <span>LIBRARY — SCREENSHOT COMING SOON</span>
+              </div>
+            </div>
+            <figcaption class="shot__caption">
+              <h3>Library</h3>
+              <p>Every past service, saved, searchable, and one click from reopening.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ Why OmniDeck ================================ -->
+    <section class="section" id="why">
+      <div class="container why">
+        <div>
+          <p class="eyebrow">Why OmniDeck</p>
+          <p class="why__statement">Built to run a <em>service</em> — not just display lyrics.</p>
+        </div>
+        <div class="why__body">
+          <p>
+            Most presentation tools are built around a slideshow: one file, one deck, one
+            timeline. A church service isn't that. It's scripture pulled live, songs with
+            verses that repeat out of order, a video that starts on cue, an offering
+            announcement dropped in without warning, and a lower-third that needs to stay
+            up while everything else keeps moving.
+          </p>
+          <p>
+            OmniDeck is built around that reality. Everything — scripture, lyrics, media,
+            announcements — lives in one playlist, on one renderer, so what your team
+            previews is exactly what the congregation sees. It runs fully offline, saves
+            as you go, and keeps the controller and the output on independent screens, so
+            a laptop hiccup never touches what's on the projector.
+          </p>
+          <ul class="why__list">
+            <li><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Scripture, lyrics, media, and announcements in one playlist</li>
+            <li><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Runs fully offline — nothing depends on a server you don't control</li>
+            <li><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Every edit autosaves — mid-service, mid-sentence</li>
+            <li><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Controller and output run as independent, purpose-built screens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================= Downloads ================================= -->
+    <section class="section" id="downloads">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Downloads</p>
+          <h2 class="section-title">Get OmniDeck</h2>
+          <p class="section-desc">Windows is available today. macOS and Linux are next.</p>
+        </div>
+
+        <div class="downloads-grid" id="downloadsGrid">
+          <div class="download-card download-card--primary" data-platform="windows">
+            <div class="download-card__top">
+              <div class="download-card__os">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.5 4.4V11H3V5.5Zm8.5-1.2L21 3v8H11.5V4.3ZM3 12h7.5v6.6L3 17.5V12Zm8.5 0H21v8l-9.5-1.3V12Z"/></svg>
+                Windows
+              </div>
+              <span class="badge badge--ready" data-status-badge>Ready</span>
+            </div>
+            <a class="btn btn--primary btn--full" data-download-btn href="#">Download for Windows</a>
+            <p class="download-card__note" data-download-note>Windows 10 / 11, 64-bit</p>
+            <p class="download-card__meta" data-download-meta>v1.0.0</p>
+          </div>
+
+          <div class="download-card" data-platform="macos">
+            <div class="download-card__top">
+              <div class="download-card__os">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.3 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8-.7 0-1.9-.8-3.1-.8-1.6 0-3.1.9-3.9 2.4-1.7 2.9-.4 7.2 1.2 9.6.8 1.1 1.7 2.4 3 2.4 1.2-.1 1.6-.8 3.1-.8s1.9.8 3.1.7c1.3 0 2.1-1.1 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.6-1-2.7-3.9v-.1ZM13.9 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.4-.6.7-1.1 1.9-1 3 1.1.1 2.2-.6 2.8-1.4Z"/></svg>
+                macOS
+              </div>
+              <span class="badge badge--soon" data-status-badge>Coming soon</span>
+            </div>
+            <button class="btn btn--disabled btn--full" aria-disabled="true" disabled>Notify me</button>
+            <p class="download-card__note" data-download-note>macOS 12 or later</p>
+            <p class="download-card__meta">Universal build in progress</p>
+          </div>
+
+          <div class="download-card" data-platform="linux">
+            <div class="download-card__top">
+              <div class="download-card__os">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18h16M6 18l1-9 5-5 5 5 1 9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 18v-3.5h6V18" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                Linux
+              </div>
+              <span class="badge badge--soon" data-status-badge>Coming soon</span>
+            </div>
+            <button class="btn btn--disabled btn--full" aria-disabled="true" disabled>Notify me</button>
+            <p class="download-card__note" data-download-note>AppImage &amp; .deb</p>
+            <p class="download-card__meta">Packaging in progress</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================== Documentation =============================== -->
+    <section class="section" id="docs">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Documentation</p>
+          <h2 class="section-title">Learn OmniDeck</h2>
+          <p class="section-desc">Guides for getting a service running, connecting OBS, and answering common questions.</p>
+        </div>
+
+        <div class="docs-grid">
+          <a class="doc-card" href="docs/getting-started.html">
+            <div><h3>Getting Started</h3><p>Install OmniDeck and run your first service.</p></div>
+            <span class="doc-card__arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a class="doc-card" href="docs/user-guide.html">
+            <div><h3>User Guide</h3><p>Playlists, slide types, transitions, and the library.</p></div>
+            <span class="doc-card__arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a class="doc-card" href="docs/obs-setup.html">
+            <div><h3>OBS Setup</h3><p>Stream or record your service with Web Output.</p></div>
+            <span class="doc-card__arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a class="doc-card" href="docs/faq.html">
+            <div><h3>FAQ</h3><p>Offline use, syncing, platforms, and licensing.</p></div>
+            <span class="doc-card__arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ Open Source ================================ -->
+    <section class="section section--tight" id="open-source">
+      <div class="container">
+        <div class="oss">
+          <div class="oss__text">
+            <h2>Open source, start to finish</h2>
+            <p>OmniDeck's full source — the desktop app, the renderer, and this website — is public on GitHub. Read the code, self-host the sync server, or send a pull request.</p>
+          </div>
+          <div class="oss__actions">
+            <a class="btn btn--secondary" href="https://github.com/OWNER/omnideck" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              Star on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================== Footer ================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="#top" class="brand">
+            <svg class="brand__mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="3" y="3" width="26" height="26" rx="8" stroke="currentColor" stroke-width="2"/>
+              <circle cx="16" cy="16" r="5" fill="#E11D48"/>
+            </svg>
+            OmniDeck
+          </a>
+          <p>Professional presentation software for churches — one playlist, one renderer, offline-first.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#downloads">Downloads</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Documentation</h4>
+          <ul>
+            <li><a href="docs/getting-started.html">Getting Started</a></li>
+            <li><a href="docs/user-guide.html">User Guide</a></li>
+            <li><a href="docs/obs-setup.html">OBS Setup</a></li>
+            <li><a href="docs/faq.html">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="https://github.com/OWNER/omnideck" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/OWNER/omnideck/releases" target="_blank" rel="noopener">Releases</a></li>
+            <li><a href="https://github.com/OWNER/omnideck/blob/main/LICENSE" target="_blank" rel="noopener">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__version" id="footerVersion">OmniDeck v1.0.0</span>
+        <span>© <span id="footerYear">2026</span> OmniDeck. Released under the MIT License.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/downloads.js"></script>
+</body>
+</html>

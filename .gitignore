@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+
+# Rust / Cargo
+# Cargo.lock is intentionally NOT ignored — this is an application, not a
+# library, and committing the lockfile keeps builds reproducible across
+# machines and platforms.
+src-tauri/target/
+
+# Tauri build output
+src-tauri/gen/
+
+# Generated CSS (rebuilt by `pnpm build:css` — see package.json / tauri.conf.json beforeBuildCommand)
+frontend/css/tailwind.css
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp

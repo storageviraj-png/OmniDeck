@@ -1,0 +1,59 @@
+/* FreeFlow — stage/canvas styling shared by output.html and the controller's
+   live preview panel. The stage is always treated as a 1920x1080 virtual
+   canvas; every element uses percentage-based positioning so it scales
+   identically at any actual pixel size (OBS canvas vs a small preview box). */
+
+.ff-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  /* Size container: makes `cqw` units in render-engine.js resolve against
+     THIS element's own pixel width, not the browser viewport. This is the
+     core of the preview/output WYSIWYG fix — see render-engine.js. */
+  container-type: inline-size;
+  container-name: ff-canvas;
+}
+
+.ff-stage, .ff-stage * { box-sizing: border-box; }
+
+/* ---- Transitions -------------------------------------------------------
+   Simple opacity/transform based transitions on the whole stage. Kept to
+   CSS transitions only (no JS animation loop) for low CPU cost in OBS. */
+.ff-stage { transition: opacity 0.38s ease, transform 0.38s ease; opacity: 1; transform: none; }
+
+.ff-out-fade, .ff-out-crossfade { opacity: 0; }
+.ff-out-slide { opacity: 0; transform: translateX(-4%); }
+.ff-out-zoom { opacity: 0; transform: scale(0.92); }
+.ff-out-cut { opacity: 0; }
+
+.ff-in-fade, .ff-in-crossfade, .ff-in-slide, .ff-in-zoom, .ff-in-cut { opacity: 0; }
+.ff-visible.ff-in-fade, .ff-visible.ff-in-crossfade { opacity: 1; transform: none; }
+.ff-visible.ff-in-slide { opacity: 1; transform: none; }
+.ff-in-slide { transform: translateX(4%); }
+.ff-visible.ff-in-zoom { opacity: 1; transform: none; }
+.ff-in-zoom { transform: scale(1.06); }
+.ff-visible.ff-in-cut { opacity: 1; transition: none; }
+
+/* Editor-only affordances (controller preview canvas) */
+.ff-editable[data-el-id] { outline: 1px dashed transparent; cursor: move; pointer-events: auto; }
+.ff-editable[data-el-id]:hover { outline-color: rgba(16,185,129,0.6); }
+.ff-editable[data-el-id].ff-selected { outline: 2px solid #10b981; }
+.ff-handle {
+  position: absolute; width: 10px; height: 10px; background: #10b981;
+  border: 1.5px solid white; border-radius: 2px; z-index: 999;
+}
+
+/* Shown in the editable preview (never in output.html) when an image URL
+   fails to load, so a bad URL/permission/network issue is visible instead
+   of just silently showing nothing. See render-engine.js. */
+.ff-img-error {
+  background: repeating-linear-gradient(45deg, #fee2e2, #fee2e2 8px, #fecaca 8px, #fecaca 16px);
+}
+.ff-img-error-badge {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #991b1b; font: 600 1.4cqw/1.3 sans-serif; text-align: center; padding: 4%;
+  pointer-events: none;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "omnideck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OmniDeck - offline-first church presentation platform",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "build:css": "tailwindcss -c tailwind.config.js -i frontend/css/tailwind-input.css -o frontend/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "tailwindcss": "^3"
+  }
+}
