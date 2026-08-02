@@ -1,3 +1,4 @@
+
 # OmniDeck
 
 Offline-first, open-source church presentation and live-streaming platform.
@@ -173,3 +174,6 @@ for a dedicated task rather than bundled into this one.
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+=======
+# OmniDeck
+>>>>>>> 379b300968b198c030353a4e11dd1967d2d73e0b
